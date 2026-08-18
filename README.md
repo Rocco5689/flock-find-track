@@ -1,14 +1,22 @@
-# Welcome to your Lovable project
+# Share My Spot
+
+Build iOS app capable of updating my gps location and sharing that location amongst those with the iPhone app installed.  The app should show a map with my location and those of others sharing their location with me.  
+
+
+
+People can join and set up groups to be joined by sharing a group code
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://flock-find-track.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/171c75da-c914-4849-a1f6-2c3fc002b426).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +28,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
