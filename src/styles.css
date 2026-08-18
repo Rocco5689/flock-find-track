@@ -141,6 +141,7 @@
 .leaflet-container {
   background: var(--background);
   font-family: var(--font-sans);
+  z-index: 0;
 }
 
 .leaflet-control-attribution {
@@ -157,6 +158,12 @@
   background: var(--surface-strong) !important;
   color: var(--foreground) !important;
   border-color: var(--border) !important;
+}
+
+/* Keep zoom controls above the bottom sheet instead of sitting on top of it */
+.leaflet-bottom.leaflet-right {
+  bottom: 12.5rem;
+  right: 0.35rem;
 }
 
 .map-pin {

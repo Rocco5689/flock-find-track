@@ -60,7 +60,8 @@ export function MapScreen() {
 
   return (
     <main className="relative h-dvh w-full overflow-hidden bg-background">
-      <div className="absolute inset-0">
+      {/* isolate keeps Leaflet pane z-indexes (400–800) from covering UI chrome */}
+      <div className="absolute inset-0 z-0 isolate">
         <ClientOnly fallback={<MapSkeleton />}>
           <Suspense fallback={<MapSkeleton />}>
             <LiveMap members={members} focusUserId={focusUserId} />
@@ -68,7 +69,7 @@ export function MapScreen() {
         </ClientOnly>
       </div>
 
-      <header className="glass-panel absolute inset-x-3 top-3 z-[500] flex items-center gap-3 rounded-2xl px-4 py-3">
+      <header className="glass-panel pointer-events-auto absolute inset-x-3 top-3 z-[1000] flex items-center gap-3 rounded-2xl px-4 py-3">
         <div className="min-w-0 flex-1">
           <h1 className="truncate font-display text-base font-semibold">
             {activeGroup?.name ?? "No group yet"}
@@ -81,18 +82,18 @@ export function MapScreen() {
             {activeGroup ? ` · ${activeGroup.code}` : ""}
           </p>
         </div>
-        <Button size="sm" variant="secondary" onClick={() => setGroupsOpen(true)}>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setGroupsOpen(true)}>
           <Users className="size-4" /> Groups
         </Button>
       </header>
 
       {gps.error ? (
-        <div className="glass-panel absolute inset-x-3 top-24 z-[500] rounded-xl px-4 py-2 text-xs text-destructive">
+        <div className="glass-panel pointer-events-auto absolute inset-x-3 top-24 z-[1000] rounded-xl px-4 py-2 text-xs text-destructive">
           {gps.error}
         </div>
       ) : null}
 
-      <section className="glass-panel absolute inset-x-0 bottom-0 z-[500] max-h-[46vh] overflow-y-auto rounded-t-3xl px-4 pb-6 pt-3">
+      <section className="glass-panel pointer-events-auto absolute inset-x-0 bottom-0 z-[1000] max-h-[46vh] overflow-y-auto rounded-t-3xl px-4 pb-6 pt-3">
         <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-border" />
         <div className="mb-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-sm">
