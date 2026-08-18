@@ -59,7 +59,8 @@ function AuthPage() {
         toast.error(error.message);
         return;
       }
-      toast.success("Account created — you're in.");
+      toast.success("Account created — check your email to confirm, then sign in.");
+      setMode("signin");
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       setBusy(false);
