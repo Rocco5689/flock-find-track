@@ -1,24 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { MapScreen } from "@/components/MapScreen";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Tether · Live Location Sharing Map" },
+      {
+        name: "description",
+        content:
+          "See your group on one live map. Share your GPS location in real time and join friends with a simple group code.",
+      },
+      { property: "og:title", content: "Tether · Live Location Sharing Map" },
+      {
+        property: "og:description",
+        content: "Share your live GPS location and see your group on one map. Join with a code.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: MapScreen,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
