@@ -20,7 +20,13 @@ export function useGpsBroadcast(userId: string | undefined): GpsState {
     if (!userId) return;
     if (!sharing) {
       setStatus("idle");
-      void supabase.from("locations").update({ sharing: false }).eq("user_id", userId);
+      void supabase
+        .from("locations")
+        .update({ sharing: false })
+        .eq("user_id", userId)
+        .then(({ error: stopError }) => {
+          if (stopError) console.error("Failed to stop sharing", stopError);
+        });
       return;
     }
     if (typeof navigator === "undefined" || !navigator.geolocation) {
@@ -37,19 +43,27 @@ export function useGpsBroadcast(userId: string | undefined): GpsState {
         const now = Date.now();
         if (now - lastSentRef.current < MIN_INTERVAL_MS) return;
         lastSentRef.current = now;
-        void supabase.from("locations").upsert(
-          {
-            user_id: userId,
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-            accuracy: position.coords.accuracy ?? null,
-            heading: position.coords.heading ?? null,
-            speed: position.coords.speed ?? null,
-            sharing: true,
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "user_id" },
-        );
+        void supabase
+          .from("locations")
+          .upsert(
+            {
+              user_id: userId,
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+              accuracy: position.coords.accuracy ?? null,
+              heading: position.coords.heading ?? null,
+              speed: position.coords.speed ?? null,
+              sharing: true,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id" },
+          )
+          .then(({ error: upsertError }) => {
+            if (upsertError) {
+              setError(upsertError.message);
+              console.error("Failed to publish location", upsertError);
+            }
+          });
       },
       (positionError) => {
         setStatus(positionError.code === positionError.PERMISSION_DENIED ? "denied" : "error");
